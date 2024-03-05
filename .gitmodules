@@ -1,0 +1,6 @@
+[submodule "Vendor/GLM"]
+	path = Vendor/GLM
+	url = https://github.com/FuJiGraphics/glm.git
+[submodule "ContourLine/vendor/FZLib"]
+	path = ContourLine/vendor/FZLib
+	url = https://github.com/FuJiGraphics/FZLibarary.git
