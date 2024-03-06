@@ -1,9 +1,16 @@
-﻿#include <Windows.h>
-#include <d3d11.h>
+﻿#include "pch.h"
+#include <Core/System.h>
 
 int main()
 {
-	// 윈도우 클래스 등록
+	using namespace ZVLab;
+	FZLib::LogSystem::SetPattern(FZLib::LogSystem::Pattern::Details);
+	FZLOG_ERROR("Failed to initialize!");
 
+	FZLib::LogSystem::SetPattern(FZLib::LogSystem::Pattern::LineScanner);
+	FZLOG_ERROR("Failed to initialize!");
+
+	FZLib::LogSystem::SetPattern(FZLib::LogSystem::Pattern::Simple);
+	FZLOG_TRACE("F");
 	return 0;
 }

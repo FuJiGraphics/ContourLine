@@ -10,6 +10,10 @@ workspace "Solution"
 
 	outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+	IncludeDir = {};
+	IncludeDir["GLM"] = "Vendor/GLM"
+	IncludeDir["FZLIB"] = "Vendor/FZLib"
+
     targetdir ("Build/Bin/"..outputDir.."/%{prj.name}")
     objdir ("Build/Bin-int/"..outputDir.."/%{prj.name}")
 
@@ -33,8 +37,23 @@ workspace "Solution"
 	includedirs
     {
         "%{prj.name}/src",
-		"%{prj.name}/src/"
+		"%{IncludeDir.FZLIB}/include",
     }
+
+	libdirs 
+	{ 
+		"%{IncludeDir.FZLIB}/lib/%{cfg.buildcfg}/%{cfg.architecture}",
+	}
+
+	links
+	{
+		"FZLib.lib",
+	}
+
+	prebuildcommands 
+	{ 
+		"{COPYFILE} %[Vendor/FZLib/lib/%{cfg.buildcfg}/%{cfg.architecture}/**.dll] %[Build/Bin/"..outputDir.."/%{prj.name}]",
+	}
 
     filter "system:Windows"
     defines
@@ -53,6 +72,11 @@ workspace "Solution"
         optimize "On"
 
 
+
+
+
+
+
 	project "ContourLine"
 		location "ContourLine"
 		kind "WindowedApp"
@@ -61,9 +85,8 @@ workspace "Solution"
 		staticruntime "off"
     systemversion "latest"  
 
-	IncludeDir = {};
-	IncludeDir["GLM"] = "Vendor/GLM"
-	IncludeDir["FZLIB"] = "%{prj.name}/vendor/FZLib/Dist/include/"
+	pchheader "pch.h"
+    pchsource "%{prj.name}/src/pch.cpp"
 
     files
     {
@@ -73,18 +96,19 @@ workspace "Solution"
 
 	includedirs
     {
-        "%{prj.name}/src",
+        "%{prj.name}/src",		
+		"%{IncludeDir.FZLIB}/Include",
         "%{IncludeDir.GLM}",
-		"%{IncludeDir.FZLIB}",
     }
-
-	links
-	{
-		"GLM",
-	}
 
 	libdirs 
 	{ 
+		"%{IncludeDir.FZLIB}/lib/%{cfg.buildcfg}/%{cfg.architecture}",
+	}
+
+	links
+	{
+		"FZLib.lib",
 	}
 
     filter "system:Windows"

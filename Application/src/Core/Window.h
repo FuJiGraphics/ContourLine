@@ -1,25 +1,29 @@
 #pragma once
-#include <Windows.h>
-#include <string>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 namespace ZVLab {
 
+	struct WindowConfig
+	{
+		int				Width;
+		int				Height;
+		std::wstring	WindowName;
+		HWND			Hwnd;
+	};
+
 	class Window
 	{
 	public:
-		Window(int width = 800, int height = 600, const char* appName = "App");
+		Window() = default;
 		~Window();
 
-		bool Initialize();
+		bool Startup(int width = 800, int height = 600, std::string&& appName = "App");
 
 
 	private:
-		HWND			m_Hwnd;
-		int				m_Width;
-		int				m_Height;
-		std::string		m_AppName;
+		WindowConfig	m_tWinConfig;
+		std::string		m_strAppName;
 	};
 
 }
